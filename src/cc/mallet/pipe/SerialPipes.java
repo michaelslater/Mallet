@@ -18,6 +18,8 @@ import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.iterator.EmptyInstanceIterator;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.Instance;
+import cc.mallet.types.LabelAlphabet;
+
 /**
  * Convert an instance through a sequence of pipes.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>
@@ -38,6 +40,17 @@ public class SerialPipes extends Pipe implements Serializable
 		for (int i = 0; i < pipes.length; i++)
 			this.pipes.add (pipes[i]);
 		resolveAlphabets();
+	}
+
+    public SerialPipes (Pipe[] pipes, LabelAlphabet target, Alphabet data)
+	{
+		this.pipes = new ArrayList<Pipe> (pipes.length);
+		for (int i = 0; i < pipes.length; i++)
+			this.pipes.add (pipes[i]);
+		targetAlphabet = target;
+        dataAlphabet = data;
+        dataAlphabetResolved = true;
+        targetAlphabetResolved = true;
 	}
 
 	public SerialPipes (Collection<Pipe> pipeList)
